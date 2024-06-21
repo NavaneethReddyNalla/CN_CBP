@@ -4,7 +4,7 @@ from server.handlers import handle_client
 
 class Server:
     def __init__(self, host='0.0.0.0', port=5555):
-        self.server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.server.bind((host, port))
         self.server.listen(5)
         print(f"Server listening on {host}:{port}")
