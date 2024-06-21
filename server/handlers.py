@@ -20,7 +20,7 @@ def handle_client(client_socket):
         client_socket.close()
 
 def start_video_stream_server(host='0.0.0.0', port=9999):
-    server_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server_socket.bind((host, port))
     server_socket.listen(5)
     print(f"Video stream server listening on {host}:{port}")
