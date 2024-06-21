@@ -5,6 +5,7 @@ import struct
 import pyautogui
 import numpy as np
 
+
 def interact_with_server(client_socket):
     try:
         while True:
@@ -18,6 +19,7 @@ def interact_with_server(client_socket):
         print(f"Socket error: {e}")
     finally:
         client_socket.close()
+
 
 def start_video_stream_client(host='127.0.0.1', port=9999):
     client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -36,6 +38,7 @@ def start_video_stream_client(host='127.0.0.1', port=9999):
         message_size = struct.pack("L", len(data))
         
         client_socket.sendall(message_size + data)
+
 
 if __name__ == "__main__":
     start_video_stream_client()

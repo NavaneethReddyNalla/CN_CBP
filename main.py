@@ -5,6 +5,7 @@ from client.client import Client
 from server.handlers import start_video_stream_server
 from client.features import start_video_stream_client
 
+
 def main():
     parser = argparse.ArgumentParser(description="Start the client or server.")
     parser.add_argument('role', choices=['server', 'client'], help="Role to start ('server' or 'client')")
@@ -24,6 +25,7 @@ def main():
         video_thread = threading.Thread(target=start_video_stream_client, args=(args.host, args.video_port))
         video_thread.start()
         client.start()
+
 
 if __name__ == "__main__":
     main()

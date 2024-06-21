@@ -4,6 +4,7 @@ import struct
 import pickle
 import numpy as np
 
+
 def handle_client(client_socket):
     try:
         while True:
@@ -18,6 +19,7 @@ def handle_client(client_socket):
         print(f"Socket error: {e}")
     finally:
         client_socket.close()
+
 
 def start_video_stream_server(host='0.0.0.0', port=9999):
     server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
